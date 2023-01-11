@@ -1,0 +1,47 @@
+<div id="<%= dom_id movie %>" class="container mb-3">
+  <%= link_to "Back to movies", movies_path %>
+  <div class="row">
+    <div class="col">
+      <h1><%= movie.title %></h1>
+      <p>Directed by <span class="fw-bold"><%= movie.director %></span></p>
+    </div>
+    <div class="col">
+      <p class="float-end"><span class="fw-bold">Release date: </span><%= movie.release_date %></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h3>About the Movie</h3>
+      <p><%= movie.description %></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <h3>Ratings</h3>
+    <div class="col">
+      <% if movie.ratings.where(user_id: current_user.id).exists? %>
+        <p>Your Rating: <%= movie.ratings.find_by(user_id: current_user.id).rate %> / 5</p>
+
+        <p>OverAll Rating: <%= movie.average_rating.round(1) %> / 5<span class="ms-3"> <%= movie.ratings_count %> ratings</span></p>
+      <% else %>
+        <%= render partial: 'ratings/form' %>
+        <p>OverAll Rating: <%= movie.average_rating.round(1) %> / 5<span class="ms-3"> <%= movie.ratings_count %> ratings</span></p>
+      <% end %>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <h3>Reviews</h3>
+    <div class="col">
+      <%= render 'reviews/form', movie: @movie, review: movie.reviews.build, submit_label: "Post" %>
+      <h3>Posted Reviews</h3>
+      <% if movie.reviews.size > 0 %>
+        <div class="border border-2 p-2 mt-2">
+          <%= render movie.reviews.order(id: :desc) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

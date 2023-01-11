@@ -1,0 +1,49 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  password: admin
+
+
+development:
+  <<: *default
+  database: MovieReviewSystem_development
+
+test:
+  <<: *default
+  database: MovieReviewSystem_test
+
+production:
+  <<: *default
+  database: MovieReviewSystem_production
+  url: <%= ENV['DATABASE_URL'] %>
+
+
+
+
+
+
+
+
+#default: &default
+#  adapter: mysql2
+#  encoding: utf8mb4
+#  pool: <%#= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#  username: root
+#  password: "admin"
+#  host: localhost
+
+#development:
+#  <<: *default
+#  database: MovieReviewSystem_development
+#
+#test:
+#  <<: *default
+#  database: MovieReviewSystem_test
+
+#production:
+#  <<: *default
+#  database: MovieReviewSystem_production
+#  username: MovieReviewSystem
+#  password: <%#= ENV["MOVIEREVIEWSYSTEM_DATABASE_PASSWORD"] %>

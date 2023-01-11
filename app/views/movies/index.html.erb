@@ -1,0 +1,100 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="container mb-3">
+  <div class="row">
+    <div class="col">
+      <h1>Movies</h1>
+    </div>
+    <div class="col">
+      <%= link_to "Create Movie", new_movie_path, class: "btn btn-primary float-end" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <form id="search_movie_form" method="GET">
+        <div class="row">
+          <div class="col-10">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="title">Title</span>
+              <input type="text" class="form-control" name="title" required>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="d-grid input-group mb-3">
+              <button class="btn btn-success">Search</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    |
+    <div class="col">
+      <form id="search_post_form" method="GET">
+        <div class="row">
+          <div class="col-5">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="from_date">From</span>
+              <input type="date" class="form-control" name="from_date" value="<%= @from_date %>" required>
+            </div>
+          </div>
+          <div class="col-5">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="to_date">To</span>
+              <input type="date" class="form-control" name="to_date" value="<%= @to_date %>" required>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="d-grid input-group mb-3">
+              <button class="btn btn-success">Search</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row align-items-center mt-4">
+    <div class="col d-flex justify-content-center">
+      <%= will_paginate @movies %>
+    </div>
+  </div>
+
+  <% if @movies.length > 0 %>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <% @movies.each do |movie| %>
+        <div class="col">
+          <div class="card mt-3">
+            <div class="card-header">
+              Directed by <%= movie.director %>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h4 class="card-title"><span class="fs-3"><%= movie.title %></span></h4>
+                  <p class="text-muted">Released on: <%= movie.release_date %></p>
+                </div>
+                <div class="col">
+                  <span class="fs-4"><%= movie.average_rating.round(1) %> / 5</span><span class="ms-3"> <%= movie.ratings_count %> ratings</span>
+                  <p class="text-muted"><%= movie.reviews_count %> reviews</p>
+                </div>
+              </div>
+              <%= link_to "Show this movie", movie, class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="row">
+      <div class="col">
+        <h3>No results found.</h3>
+      </div>
+    </div>
+  <% end %>
+  <div class="row align-items-center mt-4">
+    <div class="col d-flex justify-content-center">
+      <%= will_paginate @movies %>
+    </div>
+  </div>
+
+</div>

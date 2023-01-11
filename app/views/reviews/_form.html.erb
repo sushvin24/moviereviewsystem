@@ -1,0 +1,4 @@
+<%= form_with(model: [movie, review]) do |f| %>
+  <%= f.text_area :comment, class: "form-control", placeholder: "Type your comments here", :rows => 10, :required => true %>
+  <%= f.submit submit_label, class: "btn btn-primary mt-2" %>
+<% end %>

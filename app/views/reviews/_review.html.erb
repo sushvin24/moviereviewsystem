@@ -1,0 +1,30 @@
+<div id="<%= dom_id review %>">
+  <div class="row mt-2">
+    <div class="col">
+      <span class="fw-bold">Written by: </span><span><%= review.user.email %></span>
+      <p><%= review.comment %></p>
+      <div class="row">
+        <div class="col-1">
+          <% if can? :update, review %>
+            <%= link_to "Edit", nil, remote: true, class: "btn btn-primary",
+                        data: {
+                          controller: "reviews",
+                          action: "reviews#toggleForm",
+                          reviews_form_param: "edit-form-#{review.id}"
+                        }
+            %>
+          <% end %>
+        </div>
+        <div class="col-1">
+          <% if can? :destroy, review %>
+            <%= button_to "Delete", movie_review_path(@movie, review), form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete, class: "btn btn-danger" %>
+          <% end %>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+  <div class="d-none" id="edit-form-<%= review.id %>">
+    <%= render 'reviews/form', movie: @movie, review: review, submit_label: "Update" %>
+  </div>
+</div>
